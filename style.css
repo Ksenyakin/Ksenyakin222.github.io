@@ -2,16 +2,23 @@
     padding: 0;
     margin: 0;
 }
-body,html{
-    height: 100%;
-}
 
+body{
+    background-color:#7DB3F9 ;
+}
 .container{
     max-width: 960px;
     margin: 0 auto;
 }
-.header{
+.site-name{
+    color: black;
+}
+header{
+    background-color: #519AF9;
     width: 100%;
+    margin: 0 auto;
+    height: auto;
+    padding: 8px;
 }
 .logo{
     display: flex;
@@ -22,8 +29,19 @@ table,th,td{
     border: 1px solid;
 
 }
+nav{
+    clear: both;
+    margin-top: 20px;
+}
+tr:nth-child(even){
+    background-color: #3B71B5;
+}
+
+tr:nth-child(odd){
+    background-color: #519AF9;
+}
 .end{
-    background-color: rgb(24, 119, 242));
+    background-color: #1877F2;
     width: 100%;
     height: 50px;
     padding: 5px;
@@ -33,7 +51,7 @@ table,th,td{
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    border: 1px solid black;
+    border: 1px solid #08499D;
     overflow: hidden;
     position: relative;
     
