@@ -18,6 +18,10 @@ body,html{
     gap:30px;
     align-items: center;
 }
+table,th,td{
+    border: 1px solid;
+
+}
 .logo_wrap{
     width: 60px;
     height: 60px;
