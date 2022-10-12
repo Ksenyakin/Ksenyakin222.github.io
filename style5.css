@@ -1,0 +1,11 @@
+.bg-blue {
+    background-color: #7DB3F9;
+}
+
+.border-common {
+    border: 1px solid black;
+}
+
+.border-round {
+    border-radius: 5px;
+}
