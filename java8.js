@@ -1,94 +1,72 @@
-function popup(par) {
-  let formDiv = document.getElementById("forma");
-  let bg = document.getElementById("popup_bg");
-  if (par === true) {
-    formDiv.style.display = ("block");
-    bg.style.opacity = ("1");
-    bg.style.pointerEvents = ("all");
-    history.pushState(true, null, "#form");
-  }
-
-  else {
-    formDiv.style.display = ("none");
-    bg.style.opacity = ("0");
-    bg.style.pointerEvents = ("none");
-    history.pushState(false, null, "#");
-  }
-}
-
-
-let names = document.getElementById("InputName");
-let email = document.getElementById("InputEmail");
-let msg = document.getElementById("Textarea");
-let cb = document.getElementById("Check");
-
-
-function save() {
-  localStorage.setItem("Имя", names.value);
-  localStorage.setItem("Почта", email.value);
-  localStorage.setItem("Сообщение", msg.value);
-  localStorage.setItem("Чекбокс", cb.checked);
-}
-document.addEventListener("DOMContentLoaded", function (event) {
-  if (location.hash === "#form") {
-    popup(true);
-  }
-  window.addEventListener("popstate", (e) => {
-    popup(e);
-  });
-  let b = document.getElementById("button1");
-  b.addEventListener("click", () => {
-    popup(true);
-  });
-  let c = document.getElementById("closebutton");
-  c.addEventListener("click", () => {
-    popup(false);
-  });
-  let popupBg = document.getElementById("popup_bg");
-  document.addEventListener("click", (e) => {
-    if (e.target === popupBg) {
-      popup(false);
-    }
-  });
-
-  names.value = localStorage.getItem("Имя");
-  email.value = localStorage.getItem("Почта");
-  msg.value = localStorage.getItem("Сообщение");
-  if (localStorage.getItem("Чекбокс") === "false"){
-    cb.checked = false;}
-  else{
-    cb.checked = true;}
-
-  names.oninput = save;
+window.addEventListener("DOMContentLoaded", function () {
+  var email = document.getElementById("email");
   email.oninput = save;
-  msg.oninput = save;
-  cb.onclick = save;
+  var nick = document.getElementById("nick");
+  nick.oninput = save;
+  var anotherInput = document.getElementById("anotherInput");
+  anotherInput.oninput = save;
+  var check = document.getElementById("check");
+  check.onchange = save;
+
+  email.value = localStorage.getItem("email");
+  nick.value = localStorage.getItem("nick");
+  anotherInput.value = localStorage.getItem("anotherInput");
+  var q = localStorage.getItem("check");
+  if (q==1) {
+      check.checked = true;
+  }
+  if (q==0){
+      check.checked = false;
+  }
 });
 
-$(function () {
-  $(".ajaxForm").submit(function (e) {
-    e.preventDefault();
-    var href = $(this).attr("action");
-    $.ajax({
-      type: "POST",
-      dataType: "json",
-      url: href,
-      data: $(this).serialize(),
-      success: function (response) {
-        if (response.status === "success") {
-          alert("Успешно!");
-          localStorage.removeItem("Имя");
-          localStorage.removeItem("Почта");
-          localStorage.removeItem("Сообщение");
-          localStorage.removeItem("Чекбокс");
-          names.value = localStorage.getItem("Имя");
-          email.value = localStorage.getItem("Почта");
-          msg.value = localStorage.getItem("Сообщение");
-          cb.checked = false;
-        } else {
-          alert("Ошибка! " + response.message);
-        }
-      }
-    });
+function save(){
+localStorage.setItem("email", email.value);
+localStorage.setItem("nick", nick.value);
+localStorage.setItem("anotherInput", anotherInput.value);
+if (check1.checked) {
+    localStorage.setItem("check",1);
+}
+else {
+    localStorage.setItem("check",0);
+}
+
+}
+$(function(){
+  $(".ajaxForm").submit(function(e){
+      e.preventDefault();
+      var href = $(this).attr("action");
+      $.ajax({
+          type: "POST",
+          dataType: "json",
+          url: href,
+          data: $(this).serialize(),
+          success: function(response){
+              if(response.status == "success"){
+                  alert("Ваша заявка успешно отправлена !");
+        localStorage.removeItem("email");
+                  localStorage.removeItem("nick");
+                  localStorage.removeItem("anotherInput");
+        localStorage.removeItem("check");
+        email.value = localStorage.getItem("email");
+                  nick.value = localStorage.getItem("nick");
+                  anotherInput.value = localStorage.getItem("anotherInput");
+        check.checked = false;
+              }else{
+                  alert("Что-то пошло не так " + response.message);
+              }
+          }
+      });
   });
+});
+window.onpopstate = function(event) {
+console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
+};
+
+document.getElementById('formButton').addEventListener('click', e => {
+history.pushState({page: 1}, "title 1", "?openForm");
+
+});
+document.getElementById('closeButton').addEventListener('click', e => {
+history.back();
 });
